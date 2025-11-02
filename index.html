@@ -3,49 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Project Folder Viewer</title>
+<title>Funny Page 😜</title>
 <style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  ul { list-style-type: none; padding-left: 20px; }
-  li { cursor: pointer; margin: 5px 0; }
-  li span { user-select: none; }
-  .nested { display: none; }
-  .active { display: block; }
+  body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    text-align: center;
+    padding: 50px;
+  }
+  h1 {
+    font-size: 3em;
+    animation: bounce 1s infinite alternate;
+  }
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-20px); }
+  }
+  button {
+    font-size: 1.5em;
+    padding: 15px 30px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    background: #ffdd59;
+    transition: transform 0.2s;
+  }
+  button:hover {
+    transform: rotate(10deg) scale(1.1);
+  }
+  #joke {
+    margin-top: 30px;
+    font-size: 1.5em;
+    color: #2f3542;
+  }
 </style>
 </head>
 <body>
 
-<h1>Project Folder Structure</h1>
-
-<ul id="folderTree">
-  <li><span onclick="toggle(this)">📁 src</span>
-    <ul class="nested">
-      <li>index.html</li>
-      <li>style.css</li>
-      <li><span onclick="toggle(this)">📁 components</span>
-        <ul class="nested">
-          <li>header.js</li>
-          <li>footer.js</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li><span onclick="toggle(this)">📁 assets</span>
-    <ul class="nested">
-      <li>image1.png</li>
-      <li>image2.jpg</li>
-    </ul>
-  </li>
-  <li>README.md</li>
-</ul>
+<h1>😂 Welcome to Fun Zone! 😂</h1>
+<button onclick="tellJoke()">Click me for a joke!</button>
+<div id="joke"></div>
 
 <script>
-function toggle(element) {
-  const nested = element.nextElementSibling;
-  if (nested) {
-    nested.classList.toggle("active");
+  const jokes = [
+    "Why did the developer go broke? Because he used up all his cache!",
+    "Why do programmers prefer dark mode? Because light attracts bugs!",
+    "I told my computer I needed a break, and it said 'No problem, I’ll go to sleep!'",
+    "Why was the JavaScript developer sad? Because he didn't know how to 'null' his feelings!",
+    "Why do Python programmers wear glasses? Because they can't C#!"
+  ];
+
+  function tellJoke() {
+    const random = jokes[Math.floor(Math.random() * jokes.length)];
+    document.getElementById('joke').textContent = random;
   }
-}
 </script>
 
 </body>
