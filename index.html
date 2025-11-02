@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project Folder Viewer</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  ul { list-style-type: none; padding-left: 20px; }
+  li { cursor: pointer; margin: 5px 0; }
+  li span { user-select: none; }
+  .nested { display: none; }
+  .active { display: block; }
+</style>
 </head>
 <body>
-  
+
+<h1>Project Folder Structure</h1>
+
+<ul id="folderTree">
+  <li><span onclick="toggle(this)">📁 src</span>
+    <ul class="nested">
+      <li>index.html</li>
+      <li>style.css</li>
+      <li><span onclick="toggle(this)">📁 components</span>
+        <ul class="nested">
+          <li>header.js</li>
+          <li>footer.js</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><span onclick="toggle(this)">📁 assets</span>
+    <ul class="nested">
+      <li>image1.png</li>
+      <li>image2.jpg</li>
+    </ul>
+  </li>
+  <li>README.md</li>
+</ul>
+
+<script>
+function toggle(element) {
+  const nested = element.nextElementSibling;
+  if (nested) {
+    nested.classList.toggle("active");
+  }
+}
+</script>
+
 </body>
 </html>
