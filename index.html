@@ -3,281 +3,220 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Project Folder Viewer</title>
+<title>Local Folder Viewer</title>
 <style>
-  :root{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;--bg:#0f172a;--card:#0b1220;--muted:#94a3b8;--accent:#38bdf8}
-  body{margin:0;background:linear-gradient(180deg,#07102a 0%, #04102a 100%);color:#e6eef8;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:32px}
-  .wrap{max-width:1100px;width:100%}
-  .card{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-  header{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
-  h1{font-size:18px;margin:0}
-  .controls{display:flex;gap:8px;align-items:center}
-  input[type="file"]{display:none}
-  .btn{background:linear-gradient(90deg,#0ea5e9,#7c3aed);border:none;color:white;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
-  .info{color:var(--muted);font-size:13px}
-  .tree{margin-top:12px;border-radius:10px;overflow:auto;max-height:65vh;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
-  ul{list-style:none;padding-left:18px;margin:6px 0}
-  li{margin:4px 0;line-height:1.4;display:flex;align-items:center;gap:8px}
-  .folder::before{content:"📁";display:inline-block;width:20px}
-  .file::before{content:"📄";display:inline-block;width:20px}
-  .collapsible{cursor:pointer;user-select:none}
-  .meta{color:var(--muted);font-size:12px;margin-left:auto}
-  .search{width:260px;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-  .small{font-size:13px;color:var(--muted)}
-  .dropzone{border:2px dashed rgba(255,255,255,0.03);padding:18px;border-radius:10px;text-align:center;margin-top:12px}
-  a.file-link{color:inherit;text-decoration:none}
-  pre.preview{white-space:pre-wrap;background:rgba(0,0,0,0.45);padding:12px;border-radius:8px;overflow:auto;max-height:40vh}
+  :root{
+    --bg:#0f0f10; --panel:#121212; --accent:#9aa0ff; --muted:#cfcfcf;
+  }
+  html,body{height:100%;margin:0;font-family: Georgia, "Times New Roman", serif;background:var(--bg);color:var(--muted)}
+  .header{padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;gap:20px;align-items:center}
+  h1{margin:0;font-size:36px;color:white;letter-spacing:0.5px}
+  .controls{margin-left:auto;display:flex;gap:10px;align-items:center}
+  .btn{
+    background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 14px;border-radius:8px;color:var(--muted);cursor:pointer;
+  }
+  .container{display:flex;padding:24px;gap:24px}
+  .tree{width:420px;background:linear-gradient(180deg,#0b0b0b,#121212);border-radius:10px;padding:18px;box-shadow:0 6px 30px rgba(0,0,0,0.6)}
+  .info{flex:1;background:linear-gradient(180deg,#0b0b0b,#131313);border-radius:10px;padding:18px;overflow:auto}
+  .folder, .file{display:flex;align-items:center;gap:12px;padding:6px 8px;border-radius:6px;margin:4px 0}
+  .folder:hover, .file:hover{background:rgba(255,255,255,0.02)}
+  .toggle{cursor:pointer;user-select:none;font-weight:bold;color:var(--accent)}
+  .name{flex:1;color:#dcdcdc}
+  .meta{color:#bdbdbd;font-size:13px;min-width:160px;text-align:right}
+  .file a{color:var(--accent);text-decoration:none}
+  .small{font-size:12px;color:#9b9b9b}
+  .tree h3{margin:0 0 8px 0;color:#fff}
+  .empty{color:#777;padding:20px;text-align:center}
+  details{margin-left:6px}
+  summary::-webkit-details-marker{display:none}
+  .choose-label{display:inline-block;padding:10px 14px;border-radius:8px;background:#111;border:1px solid rgba(255,255,255,0.04);cursor:pointer;color:var(--muted)}
+  .path{color:#aab0ff;font-size:14px;margin-top:6px}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <header>
-        <div>
-          <h1>Project Folder Viewer</h1>
-          <div class="info small">Chrome में folder चुनकर project की पूरी folder structure देखें</div>
-        </div>
-        <div class="controls">
-          <label class="btn" title="Select folder">
-            Select folder
-            <input id="folderInput" type="file" webkitdirectory directory multiple />
-          </label>
-          <button id="clearBtn" class="btn ghost">Clear</button>
-        </div>
-      </header>
+  <div class="header">
+    <h1>Index of Local Folder</h1>
+    <div class="controls">
+      <label class="choose-label">
+        Choose folder
+        <input id="dirPicker" type="file" webkitdirectory directory multiple style="display:none">
+      </label>
+      <button id="clearBtn" class="btn">Clear</button>
+    </div>
+  </div>
 
-      <div style="display:flex;gap:10px;align-items:center;margin-bottom:8px">
-        <input id="search" class="search" placeholder="Search files or folders..." />
-        <div class="small" id="summary">No folder loaded</div>
-      </div>
+  <div class="container">
+    <div class="tree" id="treePanel">
+      <h3>Folder structure</h3>
+      <div id="treeRoot" class="empty">Folder select karo upar "Choose folder" se.</div>
+    </div>
 
-      <div class="dropzone" id="dropzone">या folder यहाँ drag & drop करें</div>
-
-      <div class="tree" id="tree"></div>
-
-      <details style="margin-top:12px" open>
-        <summary style="cursor:pointer">Preview / File content (click a file)</summary>
-        <pre class="preview" id="preview">No file selected</pre>
-      </details>
+    <div class="info">
+      <h3>File info & preview</h3>
+      <div id="infoArea" class="empty">Koi file open karke dekho — preview ya file open karne ka option yahan milega.</div>
     </div>
   </div>
 
 <script>
-(function(){
-  const input = document.getElementById('folderInput');
-  const treeEl = document.getElementById('tree');
-  const summary = document.getElementById('summary');
-  const clearBtn = document.getElementById('clearBtn');
-  const search = document.getElementById('search');
-  const dropzone = document.getElementById('dropzone');
-  const preview = document.getElementById('preview');
+/* Helper formatting */
+function formatSize(n){
+  if(n < 1024) return n + ' B';
+  if(n < 1024*1024) return (n/1024).toFixed(1) + ' kB';
+  if(n < 1024*1024*1024) return (n/(1024*1024)).toFixed(1) + ' MB';
+  return (n/(1024*1024*1024)).toFixed(2) + ' GB';
+}
+function formatDate(ms){ const d = new Date(ms); return d.toLocaleString(); }
 
-  let fileList = []; // File objects
-  let treeData = {}; // nested structure
-
-  function bytesToSize(bytes){
-    if(bytes === 0) return '0 B';
-    const k=1024, sizes=['B','KB','MB','GB','TB'];
-    const i=Math.floor(Math.log(bytes)/Math.log(k));
-    return parseFloat((bytes / Math.pow(k,i)).toFixed(2)) + ' ' + sizes[i];
-  }
-
-  function buildTree(files){
-    const root = {};
-    for(const file of files){
-      const rel = file.webkitRelativePath || file.name;
-      const parts = rel.split('/');
-      let node = root;
-      for(let i=0;i<parts.length;i++){
-        const p = parts[i];
-        if(!node[p]) node[p] = { __meta: { childrenOrder:[], isFile: i===parts.length-1 && !rel.endsWith('/') } , __children:{} };
-        if(!node[p].__meta.added){
-          node.__meta.childrenOrder.push(p);
-          node[p].__meta.added = true;
-        }
-        if(i===parts.length-1){
-          // attach file object if it's a file
-          if(node[p]){
-            node[p].__meta.file = file;
-          }
-        }
-        node = node[p].__children;
-      }
-    }
-    return root;
-  }
-
-  function renderNode(node, container, path=''){
-    const keys = Object.keys(node).filter(k=>k!=='__meta' && k!=='__children').sort((a,b)=>a.localeCompare(b));
-    const ul = document.createElement('ul');
-    container.appendChild(ul);
-    for(const key of keys){
-      const item = node[key];
-      const meta = item.__meta || {};
-      const li = document.createElement('li');
-      const isFile = !!meta.file;
-      const nameSpan = document.createElement('span');
-      nameSpan.textContent = key;
-      nameSpan.title = key;
-      if(isFile){
-        li.classList.add('file');
-        nameSpan.classList.add('file-link');
-        nameSpan.style.cursor = 'pointer';
-        nameSpan.onclick = async (e)=>{
-          // preview small text files, otherwise offer download
-          const f = meta.file;
-          const ext = (f.name.split('.').pop()||'').toLowerCase();
-          const textTypes = ['txt','md','json','js','css','html','py','java','c','cpp','kt','xml','csv'];
-          if(textTypes.includes(ext) && f.size < 2000000){ // <2MB
-            const txt = await f.text();
-            preview.textContent = txt;
-          } else {
-            // create blob url and open in new tab to download/view
-            const url = URL.createObjectURL(f);
-            window.open(url, '_blank');
-            setTimeout(()=>URL.revokeObjectURL(url), 30000);
-          }
-        };
-        const metaSpan = document.createElement('span');
-        metaSpan.className = 'meta';
-        metaSpan.textContent = `${bytesToSize(meta.file.size||0)}`;
-        li.appendChild(nameSpan);
-        li.appendChild(metaSpan);
+/* Build nested tree from webkitRelativePath */
+function buildTree(fileList){
+  const root = {};
+  for(const f of fileList){
+    const path = f.webkitRelativePath || f.name;
+    const parts = path.split('/');
+    let node = root;
+    for(let i=0;i<parts.length;i++){
+      const p = parts[i];
+      if(i === parts.length-1){
+        // file
+        if(!node._files) node._files = [];
+        node._files.push({name:p, file: f});
       } else {
-        li.classList.add('folder');
-        nameSpan.classList.add('collapsible');
-        nameSpan.onclick = (e)=>{
-          const subtree = li.querySelector('ul');
-          if(subtree) subtree.style.display = (subtree.style.display === 'none') ? 'block' : 'none';
-        };
-        li.appendChild(nameSpan);
-        renderNode(item.__children, li, path + key + '/');
-        // start collapsed
-        const sub = li.querySelector('ul');
-        if(sub) sub.style.display = 'none';
+        if(!node[p]) node[p] = {};
+        node = node[p];
       }
-      ul.appendChild(li);
-    }
-    if(keys.length===0){
-      const em = document.createElement('div');
-      em.className='small';
-      em.textContent='(empty)';
-      ul.appendChild(em);
     }
   }
+  return root;
+}
 
-  function flattenFiles(files){
-    return files.map(f=>({name:f.name, path:f.webkitRelativePath||f.name, size:f.size, type:f.type}));
-  }
+/* Render tree into DOM */
+function renderTree(node, container, basePath=''){
+  container.innerHTML = '';
+  const ul = document.createElement('div');
 
-  function showSummary(files){
-    const count = files.length;
-    const total = files.reduce((s,f)=>s+f.size,0);
-    summary.textContent = `${count} files • ${bytesToSize(total)}`;
-  }
-
-  function handleFiles(files){
-    fileList = Array.from(files);
-    if(fileList.length===0){
-      treeEl.innerHTML = '<div class="small">No files</div>';
-      summary.textContent = 'No files';
-      return;
-    }
-    // build tree
-    const tree = buildTree(fileList);
-    treeData = tree;
-    treeEl.innerHTML = '';
-    renderNode(tree, treeEl, '');
-    showSummary(fileList);
-    preview.textContent = 'Click a file to preview (text files) or open in new tab.';
-  }
-
-  input.addEventListener('change', (ev)=>{
-    handleFiles(ev.target.files);
-  });
-
-  clearBtn.addEventListener('click', ()=>{
-    input.value = '';
-    treeEl.innerHTML = '';
-    summary.textContent = 'No folder loaded';
-    preview.textContent = 'No file selected';
-    fileList = [];
-    treeData = {};
-  });
-
-  // drag & drop support
-  ['dragenter','dragover'].forEach(ev=>{
-    dropzone.addEventListener(ev, e=>{
-      e.preventDefault(); e.stopPropagation();
-      dropzone.style.borderColor = 'rgba(255,255,255,0.15)';
+  function walk(curr, el, path){
+    // folders
+    Object.keys(curr).filter(k=>!k.startsWith('_')).sort().forEach(folderName=>{
+      const folderNode = curr[folderName];
+      const details = document.createElement('details');
+      details.open = false;
+      const summary = document.createElement('summary');
+      summary.innerHTML = '<span class="toggle">📁</span> <span class="name">' + folderName + '</span>';
+      details.appendChild(summary);
+      const inner = document.createElement('div');
+      inner.style.paddingLeft = '12px';
+      walk(folderNode, inner, path + folderName + '/');
+      details.appendChild(inner);
+      el.appendChild(details);
     });
-  });
-  ['dragleave','drop'].forEach(ev=>{
-    dropzone.addEventListener(ev, e=>{
-      e.preventDefault(); e.stopPropagation();
-      dropzone.style.borderColor = 'rgba(255,255,255,0.03)';
-    });
-  });
-
-  dropzone.addEventListener('drop', async (e)=>{
-    const items = e.dataTransfer.items;
-    // Chrome supports dropped folders as entries — but it's complex. Simpler: if files present, use them.
-    if(items && items.length){
-      // find files from dataTransfer.files (includes recursive files when folder dropped)
-      const files = e.dataTransfer.files;
-      handleFiles(files);
+    // files
+    if(curr._files){
+      curr._files.sort((a,b)=>a.name.localeCompare(b.name)).forEach(fobj=>{
+        const row = document.createElement('div');
+        row.className = 'file';
+        const icon = document.createElement('span'); icon.textContent = '📄';
+        const name = document.createElement('div'); name.className='name';
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = fobj.name;
+        link.addEventListener('click', (e)=>{
+          e.preventDefault();
+          openFile(fobj.file);
+        });
+        name.appendChild(link);
+        const meta = document.createElement('div'); meta.className='meta small';
+        meta.textContent = formatSize(fobj.file.size) + ' • ' + formatDate(fobj.file.lastModified);
+        row.appendChild(icon); row.appendChild(name); row.appendChild(meta);
+        el.appendChild(row);
+      });
     }
-  });
+  }
 
-  // search filter (client-side)
-  search.addEventListener('input', ()=>{
-    const q = search.value.trim().toLowerCase();
-    if(!q){
-      treeEl.innerHTML = '';
-      renderNode(treeData, treeEl);
-      // collapse nodes by default
-      treeEl.querySelectorAll('ul').forEach(u=>u.style.display='none');
-      return;
-    }
-    // simple filter: show only paths that contain q
-    const filtered = fileList.filter(f => (f.webkitRelativePath || f.name).toLowerCase().includes(q));
-    // build flat display grouped by path
-    const grouping = {};
-    filtered.forEach(f=>{
-      const path = f.webkitRelativePath || f.name;
-      grouping[path] = f;
-    });
-    // render as flat list
-    treeEl.innerHTML = '';
-    const ul = document.createElement('ul');
-    for(const p of Object.keys(grouping).sort()){
-      const li = document.createElement('li');
-      li.className = 'file';
-      const a = document.createElement('span');
-      a.textContent = p;
-      a.style.cursor = 'pointer';
-      a.onclick = async ()=>{
-        const txt = await grouping[p].text();
-        preview.textContent = txt.slice(0, 100000);
-      };
-      const meta = document.createElement('span');
-      meta.className='meta';
-      meta.textContent = bytesToSize(grouping[p].size);
-      li.appendChild(a);
-      li.appendChild(meta);
-      ul.appendChild(li);
-    }
-    if(Object.keys(grouping).length===0){
-      const emp = document.createElement('div'); emp.className='small'; emp.textContent='No matches';
-      treeEl.appendChild(emp);
-    } else treeEl.appendChild(ul);
-  });
+  walk(node, ul, basePath);
+  if(ul.children.length === 0){
+    container.innerHTML = '<div class="empty">Is folder me koi file nahi mili.</div>';
+  } else {
+    container.appendChild(ul);
+  }
+}
 
-  // initial empty message
-  treeEl.innerHTML = '<div class="small">Choose a folder to see its structure.</div>';
+/* Show file info & preview */
+function openFile(file){
+  const info = document.getElementById('infoArea');
+  info.innerHTML = '';
+  const title = document.createElement('div'); title.style.fontWeight='700'; title.style.marginBottom='8px';
+  title.textContent = file.name;
+  const meta = document.createElement('div'); meta.className='small';
+  meta.textContent = 'Size: ' + formatSize(file.size) + ' • Modified: ' + formatDate(file.lastModified);
+  const actions = document.createElement('div'); actions.style.marginTop='10px';
+  const openBtn = document.createElement('button'); openBtn.className='btn'; openBtn.textContent='Open in new tab';
+  openBtn.onclick = ()=> {
+    const blobUrl = URL.createObjectURL(file);
+    window.open(blobUrl, '_blank');
+  };
+  const downloadBtn = document.createElement('a'); downloadBtn.className='btn'; downloadBtn.textContent='Download';
+  downloadBtn.href = URL.createObjectURL(file);
+  downloadBtn.download = file.name;
+  downloadBtn.style.marginLeft = '10px';
+  actions.appendChild(openBtn); actions.appendChild(downloadBtn);
 
-})();
+  info.appendChild(title); info.appendChild(meta); info.appendChild(actions);
+
+  // If image/pdf/text — try inline preview
+  if(file.type.startsWith('image/')){
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    img.style.maxWidth='100%'; img.style.marginTop='12px'; img.style.borderRadius='8px';
+    info.appendChild(img);
+  } else if(file.type === 'application/pdf'){
+    const iframe = document.createElement('iframe');
+    iframe.src = URL.createObjectURL(file);
+    iframe.style.width='100%'; iframe.style.height='70vh'; iframe.style.marginTop='12px'; iframe.style.border='none';
+    info.appendChild(iframe);
+  } else if(file.type.startsWith('text/') || file.name.match(/\.(md|json|js|html|css|txt)$/i)){
+    const reader = new FileReader();
+    reader.onload = ()=> {
+      const pre = document.createElement('pre');
+      pre.style.maxHeight='60vh'; pre.style.overflow='auto'; pre.style.background='#0b0b0b';
+      pre.style.padding='12px'; pre.style.borderRadius='8px'; pre.style.marginTop='12px';
+      pre.textContent = reader.result;
+      info.appendChild(pre);
+    };
+    reader.readAsText(file);
+  } else {
+    const note = document.createElement('div');
+    note.className='small';
+    note.style.marginTop='12px';
+    note.textContent = 'Preview unavailable for this file type. Use "Open in new tab" or "Download".';
+    info.appendChild(note);
+  }
+}
+
+/* Wire up input */
+const picker = document.getElementById('dirPicker');
+const treeRoot = document.getElementById('treeRoot');
+picker.addEventListener('change', (ev)=>{
+  const files = Array.from(ev.target.files || []);
+  if(files.length === 0) return;
+  const tree = buildTree(files);
+  renderTree(tree, treeRoot);
+  // show selected path
+  const header = document.querySelector('.tree h3');
+  header.textContent = 'Folder structure — (Selected)';
+  document.querySelector('.path')?.remove();
+  const pathEl = document.createElement('div'); pathEl.className='path';
+  pathEl.textContent = files[0].webkitRelativePath ? files[0].webkitRelativePath.split('/')[0] : 'Selected folder';
+  document.querySelector('.tree').appendChild(pathEl);
+});
+
+/* Clear */
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  picker.value = '';
+  treeRoot.innerHTML = '<div class="empty">Folder select karo upar "Choose folder" se.</div>';
+  document.getElementById('infoArea').innerHTML = '<div class="empty">Koi file open karke dekho — preview ya file open karne ka option yahan milega.</div>';
+  document.querySelector('.tree h3').textContent = 'Folder structure';
+  document.querySelector('.path')?.remove();
+});
 </script>
 </body>
 </html>
