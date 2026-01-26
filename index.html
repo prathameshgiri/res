@@ -1,355 +1,304 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prathamesh Giri | Developer Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>My Categories</title>
     <style>
-        :root {
-            --primary: #00d2ff;
-            --secondary: #3a7bd5;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--dark);
-            color: var(--light);
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 210, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(58, 123, 213, 0.1) 0%, transparent 20%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        /* --- Animations --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* --- Header --- */
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .profile-card {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            padding: 3rem;
-            border-radius: 20px;
-            animation: fadeIn 1s ease-out;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            margin-bottom: 1.5rem;
-            object-fit: cover;
-            animation: float 6s ease-in-out infinite;
-            background: #ddd; /* Placeholder color */
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .role {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
-        }
-
-        /* --- Sections --- */
-        section {
-            padding: 5rem 2rem;
+        .container {
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 3rem;
+        h1 {
             text-align: center;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
+            color: white;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        /* --- About Developer --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            background: var(--glass);
-            padding: 2rem;
+        .category {
+            background: white;
             border-radius: 15px;
-            border: 1px solid var(--glass-border);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
         }
 
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.1rem;
-        }
-        
-        .detail-item i {
-            color: var(--primary);
-            width: 25px;
-        }
-
-        /* --- Skills --- */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-card {
-            background: var(--glass);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            transition: 0.3s;
-            border: 1px solid var(--glass-border);
-        }
-
-        .skill-card:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .category:hover {
             transform: translateY(-5px);
         }
 
-        .skill-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
         }
 
-        /* --- Resources/Projects --- */
-        .resource-card {
-            background: var(--glass);
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-left: 5px solid var(--secondary);
-            transition: 0.3s;
+        .category-icon {
+            font-size: 2em;
+            margin-right: 15px;
         }
 
-        .resource-card:hover {
-            transform: scale(1.02);
+        .category-title {
+            font-size: 1.8em;
+            color: #333;
+            font-weight: bold;
         }
 
-        .tag {
-            display: inline-block;
-            background: rgba(58, 123, 213, 0.3);
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            margin-right: 5px;
+        .links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
         }
 
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(0,0,0,0.5);
-            margin-top: 3rem;
-            color: #94a3b8;
+        .link-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        @media (min-width: 768px) {
-            .about-grid {
-                grid-template-columns: 1fr 1fr;
+        .link-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .link-text {
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .link-arrow {
+            font-size: 1.2em;
+            margin-left: 10px;
+        }
+
+        /* Image specific styles */
+        .image-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .image-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .image-info {
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .image-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .image-url {
+            font-size: 0.85em;
+            opacity: 0.9;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #45a049;
+        }
+
+        @media (max-width: 768px) {
+            .links-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
             }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>📂 My Categories</h1>
 
-    <header>
-        <div class="profile-card">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Prathamesh" alt="Prathamesh Giri" class="profile-img">
-            <h1>Prathamesh Giri</h1>
-            <p class="role">Associate Developer @ TCS</p>
-            <p style="margin-bottom: 1.5rem; color: #cbd5e1;">Building scalable web apps & experimenting with AI in Pune.</p>
-            <a href="#contact" class="btn">Contact Me</a>
-            <a href="https://instagram.com/developer.hulk" target="_blank" class="btn" style="background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045); margin-left: 10px;">
-                <i class="fab fa-instagram"></i> developer.hulk
-            </a>
-        </div>
-    </header>
-
-    <section id="about">
-        <h2>About Developer</h2>
-        <div class="about-grid">
-            <div class="detail-item">
-                <i class="fas fa-briefcase"></i>
-                <span>Currently working as an Associate Developer at <strong>TCS</strong>.</span>
+        <!-- Projects Category -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">💻</span>
+                <h2 class="category-title">Projects</h2>
             </div>
-            <div class="detail-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>Living in <strong>Pune</strong> (Originally from Aurad Shahajani).</span>
-            </div>
-            <div class="detail-item">
-                <i class="fas fa-code"></i>
-                <span>Specialized in <strong>Web Development</strong> for small businesses.</span>
-            </div>
-            <div class="detail-item">
-                <i class="fas fa-rocket"></i>
-                <span>Passion: Building AI Voice Assistants & Course Apps.</span>
+            <div class="links-container" id="projects-links">
+                <a href="https://github.com/yourproject1" class="link-item" target="_blank">
+                    <span class="link-text">Project 1 - Portfolio Website</span>
+                    <span class="link-arrow">→</span>
+                </a>
+                <a href="https://github.com/yourproject2" class="link-item" target="_blank">
+                    <span class="link-text">Project 2 - Todo App</span>
+                    <span class="link-arrow">→</span>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="skills">
-        <h2>Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <i class="fab fa-react skill-icon" style="color: #61DBFB;"></i>
-                <h3>React.js</h3>
-                <p>Frontend Magic</p>
+        <!-- Images Category -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">🖼️</span>
+                <h2 class="category-title">Images</h2>
             </div>
-            <div class="skill-card">
-                <i class="fab fa-python skill-icon" style="color: #FFD43B;"></i>
-                <h3>Python</h3>
-                <p>AI & Scripting</p>
-            </div>
-            <div class="skill-card">
-                <i class="fab fa-android skill-icon" style="color: #3DDC84;"></i>
-                <h3>Kotlin</h3>
-                <p>Android Dev</p>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-fire skill-icon" style="color: #FFA611;"></i>
-                <h3>Firebase</h3>
-                <p>Realtime DB</p>
-            </div>
-            <div class="skill-card">
-                <i class="fas fa-globe skill-icon" style="color: #00d2ff;"></i>
-                <h3>Web Design</h3>
-                <p>HTML5 / CSS3</p>
+            <div class="links-container" id="images-links">
+                <a href="https://picsum.photos/800/600?random=1" class="image-item" target="_blank">
+                    <img src="https://picsum.photos/800/600?random=1" alt="Image 1" class="image-preview">
+                    <div class="image-info">
+                        <div class="image-name">Beautiful Wallpaper</div>
+                        <div class="image-url">picsum.photos/800/600</div>
+                    </div>
+                </a>
+                <a href="https://picsum.photos/800/600?random=2" class="image-item" target="_blank">
+                    <img src="https://picsum.photos/800/600?random=2" alt="Image 2" class="image-preview">
+                    <div class="image-info">
+                        <div class="image-name">Nature Photo</div>
+                        <div class="image-url">picsum.photos/800/600</div>
+                    </div>
+                </a>
+                <a href="https://picsum.photos/800/600?random=3" class="image-item" target="_blank">
+                    <img src="https://picsum.photos/800/600?random=3" alt="Image 3" class="image-preview">
+                    <div class="image-info">
+                        <div class="image-name">Cool Background</div>
+                        <div class="image-url">picsum.photos/800/600</div>
+                    </div>
+                </a>
             </div>
         </div>
-    </section>
 
-    <section id="resources">
-        <h2>Projects & Resources</h2>
-        
-        <div class="resource-card">
-            <h3><i class="fas fa-microphone-alt"></i> Local Voice AI Assistant</h3>
-            <p>A personal project creating a voice-activated assistant using Python and Ollama for local LLM processing.</p>
-            <div class="tag">Python</div>
-            <div class="tag">Ollama</div>
-            <div class="tag">AI</div>
+        <!-- Docs Category -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">📄</span>
+                <h2 class="category-title">Docs</h2>
+            </div>
+            <div class="links-container" id="docs-links">
+                <a href="https://docs.google.com/document1" class="link-item" target="_blank">
+                    <span class="link-text">Document 1 - Resume</span>
+                    <span class="link-arrow">→</span>
+                </a>
+                <a href="https://docs.google.com/document2" class="link-item" target="_blank">
+                    <span class="link-text">Document 2 - Notes</span>
+                    <span class="link-arrow">→</span>
+                </a>
+            </div>
         </div>
 
-        <div class="resource-card">
-            <h3><i class="fas fa-graduation-cap"></i> Course-Based Android App</h3>
-            <p>An educational application built for delivering course content efficiently.</p>
-            <div class="tag">Kotlin</div>
-            <div class="tag">Firebase</div>
-            <div class="tag">Mobile</div>
+        <!-- APKs Category -->
+        <div class="category">
+            <div class="category-header">
+                <span class="category-icon">📱</span>
+                <h2 class="category-title">APKs</h2>
+            </div>
+            <div class="links-container" id="apks-links">
+                <a href="https://example.com/app1.apk" class="link-item" target="_blank">
+                    <span class="link-text">App 1 - WhatsApp</span>
+                    <span class="link-arrow">→</span>
+                </a>
+                <a href="https://example.com/app2.apk" class="link-item" target="_blank">
+                    <span class="link-text">App 2 - Custom App</span>
+                    <span class="link-arrow">→</span>
+                </a>
+            </div>
         </div>
-
-        <div class="resource-card">
-            <h3><i class="fab fa-instagram"></i> Instagram Growth Strategy</h3>
-            <p>Resources and planning for the "developer.hulk" content creation journey.</p>
-            <div class="tag">Content Creation</div>
-            <div class="tag">Branding</div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <p>&copy; 2026 Prathamesh Giri. All rights reserved.</p>
-        <div style="margin-top: 1rem; font-size: 1.5rem;">
-            <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-github"></i></a>
-            <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-linkedin"></i></a>
-            <a href="https://instagram.com/developer.hulk" style="color: white; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Simple scroll reveal animation
-        window.addEventListener('scroll', reveal);
+        function addLink(category) {
+            const name = prompt('Link ka naam enter karo:');
+            if (!name) return;
+            
+            const url = prompt('URL enter karo:');
+            if (!url) return;
 
-        function reveal(){
-            var reveals = document.querySelectorAll('.skill-card, .resource-card');
+            const container = document.getElementById(`${category}-links`);
+            const linkItem = document.createElement('a');
+            linkItem.href = url;
+            linkItem.className = 'link-item';
+            linkItem.target = '_blank';
+            linkItem.innerHTML = `
+                <span class="link-text">${name}</span>
+                <span class="link-arrow">→</span>
+            `;
+            
+            container.appendChild(linkItem);
+        }
 
-            for(var i = 0; i < reveals.length; i++){
-                var windowheight = window.innerHeight;
-                var revealtop = reveals[i].getBoundingClientRect().top;
-                var revealpoint = 150;
+        function addImage() {
+            const name = prompt('Image ka naam enter karo:');
+            if (!name) return;
+            
+            const url = prompt('Image URL enter karo:');
+            if (!url) return;
 
-                if(revealtop < windowheight - revealpoint){
-                    reveals[i].style.opacity = '1';
-                    reveals[i].style.transform = 'translateY(0)';
-                }
-            }
+            const container = document.getElementById('images-links');
+            const imageItem = document.createElement('a');
+            imageItem.href = url;
+            imageItem.className = 'image-item';
+            imageItem.target = '_blank';
+            imageItem.innerHTML = `
+                <img src="${url}" alt="${name}" class="image-preview" onerror="this.src='https://via.placeholder.com/800x600?text=Image+Not+Found'">
+                <div class="image-info">
+                    <div class="image-name">${name}</div>
+                    <div class="image-url">${url}</div>
+                </div>
+            `;
+            
+            container.appendChild(imageItem);
         }
     </script>
 </body>
