@@ -1,305 +1,371 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Categories</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .category {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .category:hover {
-            transform: translateY(-5px);
-        }
-
-        .category-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #667eea;
-        }
-
-        .category-icon {
-            font-size: 2em;
-            margin-right: 15px;
-        }
-
-        .category-title {
-            font-size: 1.8em;
-            color: #333;
-            font-weight: bold;
-        }
-
-        .links-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-
-        .link-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .link-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-        }
-
-        .link-text {
-            font-weight: 500;
-            flex: 1;
-        }
-
-        .link-arrow {
-            font-size: 1.2em;
-            margin-left: 10px;
-        }
-
-        /* Image specific styles */
-        .image-item {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: #333;
-            display: block;
-        }
-
-        .image-item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-        .image-preview {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background: #f0f0f0;
-        }
-
-        .image-info {
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .image-name {
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-
-        .image-url {
-            font-size: 0.85em;
-            opacity: 0.9;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .add-btn {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 15px;
-            transition: background 0.3s ease;
-        }
-
-        .add-btn:hover {
-            background: #45a049;
-        }
-
-        @media (max-width: 768px) {
-            .links-container {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Asset Manager | Prathamesh Giri</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Professional Asset Manager - All my projects, images, and files in one place">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+  background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  min-height:100vh;
+  padding:20px;
+}
+.container{max-width:1400px;margin:0 auto}
+header{
+  text-align:center;
+  color:#fff;
+  margin-bottom:40px;
+  padding:20px;
+}
+h1{
+  font-size:2.8em;
+  margin-bottom:10px;
+  text-shadow:3px 3px 6px rgba(0,0,0,.3);
+}
+.subtitle{
+  font-size:1.1em;
+  opacity:.9;
+}
+.search-box{
+  margin:20px 0 30px;
+  text-align:center;
+}
+.search-box input{
+  width:100%;
+  max-width:600px;
+  padding:15px 20px;
+  font-size:1em;
+  border:none;
+  border-radius:50px;
+  box-shadow:0 5px 15px rgba(0,0,0,.2);
+  outline:none;
+}
+.category{
+  background:#fff;
+  border-radius:15px;
+  padding:25px;
+  margin-bottom:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  animation:fadeIn .5s ease-in;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.category-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:3px solid #667eea;
+  padding-bottom:12px;
+  margin-bottom:20px;
+}
+.category-title{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:1.6em;
+  color:#333;
+}
+.file-count{
+  background:#667eea;
+  color:#fff;
+  padding:5px 15px;
+  border-radius:20px;
+  font-size:.85em;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:18px;
+}
+.card{
+  background:#fff;
+  border:2px solid #e8e8e8;
+  border-radius:10px;
+  overflow:hidden;
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;
+}
+.card:hover{
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 12px 24px rgba(0,0,0,.15);
+  border-color:#667eea;
+}
+.card img{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+  border-bottom:3px solid #667eea;
+}
+.file-icon{
+  height:190px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:4em;
+  background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);
+  border-bottom:3px solid #667eea;
+}
+.info{
+  padding:15px;
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#fff;
+}
+.filename{
+  font-weight:600;
+  margin-bottom:8px;
+  font-size:.95em;
+  word-break:break-word;
+  line-height:1.4;
+}
+.filepath{
+  font-size:.72em;
+  opacity:.85;
+  margin:6px 0 10px;
+  font-family:'Courier New',monospace;
+  background:rgba(255,255,255,.15);
+  padding:6px 8px;
+  border-radius:4px;
+  word-break:break-all;
+}
+.btn-copy{
+  background:#4CAF50;
+  border:none;
+  padding:9px 14px;
+  border-radius:6px;
+  color:#fff;
+  cursor:pointer;
+  font-size:.88em;
+  width:100%;
+  font-weight:600;
+  transition:.3s;
+}
+.btn-copy:hover{background:#45a049;transform:scale(1.03)}
+.btn-copy:active{transform:scale(.98)}
+.btn-copy.copied{background:#2196F3;animation:pulse .3s}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.no-results{
+  text-align:center;
+  padding:60px 20px;
+  color:#666;
+  font-size:1.2em;
+}
+footer{
+  text-align:center;
+  color:#fff;
+  padding:30px;
+  margin-top:40px;
+  opacity:.9;
+}
+@media(max-width:768px){
+  h1{font-size:2em}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .category{padding:15px}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>📂 My Categories</h1>
+<div class="container">
+  <header>
+    <h1>📂 Asset Manager</h1>
+    <p class="subtitle">Prathamesh Giri - Portfolio & Projects</p>
+  </header>
+  
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Search files... (e.g., portfolio, react, gallery)">
+  </div>
+  
+  <div id="app"></div>
+  
+  <footer>
+    <p>Made with ❤️ by Prathamesh Giri | © 2025</p>
+  </footer>
+</div>
 
-        <!-- Projects Category -->
-        <div class="category">
-            <div class="category-header">
-                <span class="category-icon">💻</span>
-                <h2 class="category-title">Projects</h2>
-            </div>
-            <div class="links-container" id="projects-links">
-                <a href="https://github.com/yourproject1" class="link-item" target="_blank">
-                    <span class="link-text">Project 1 - Portfolio Website</span>
-                    <span class="link-arrow">→</span>
-                </a>
-                <a href="https://github.com/yourproject2" class="link-item" target="_blank">
-                    <span class="link-text">Project 2 - Todo App</span>
-                    <span class="link-arrow">→</span>
-                </a>
-            </div>
+<script>
+const ASSETS = {
+  "📱 APK Files": {
+    folder: "APK",
+    files: ["CareConnect.apk", "foodapp.apk"]
+  },
+  "📝 Blog": {
+    folder: "Blog",
+    files: ["journey.jpg", "kotlin.jpg", "opensource.jpeg", "portfolio.jpg", "seo.jpg"]
+  },
+  "📄 Resume & CV": {
+    folder: "CV",
+    files: ["Resume-PrathameshGiri.docx", "Resume-PrathameshGiri.pdf"]
+  },
+  "🖼️ Gallery": {
+    folder: "gallery",
+    files: [
+      "456789.jpeg", "765456.jpeg", "4567890.jpg", "09876543.jpeg",
+      "20250206_132923.jpg", "45678765.jpg", "54345678.jpeg",
+      "0205084229.jpg", "1117205032.jpg", "1125133730.jpg",
+      "34567876543.jpeg", "41016220719.jpg", "45678909876.jpg",
+      "50119125839.jpg", "50205095945.jpg", "50424140906.jpg",
+      "0240711112846.jpg", "240826183541.jpg", "250424140901.jpg",
+      "1704780785569.jpg", "1724429522438.jpg", "1724429634431.jpg",
+      "1745678909876.jpeg", "1765076568986.jpg"
+    ]
+  },
+  "👤 Prathamesh": {
+    folder: "prathamesh",
+    files: ["hero.img.jpeg", "logo.png", "old.img.jpeg", "out-0.jpeg", "parth.jpg"]
+  },
+  "👥 Profiles": {
+    folder: "profiles",
+    files: [
+      "adarsh.jpg", "alok.jpeg", "jayanti.jpg", "jyoti.jpg",
+      "kaustubh.jpg", "ph.jpg", "pihu.jpeg", "rahul.jpg",
+      "riya.jpg", "sushant.jpeg", "tejalkotalwar.jpg",
+      "tejalkotalwar1.jpg", "vp.jpg"
+    ]
+  },
+  "🎨 Projects": {
+    folder: "projects",
+    files: [
+      "age-calculetor.PNG", "ai.png", "battery.PNG", "calculator.PNG",
+      "careconnect.png", "dashboard.png", "delivery.PNG", "dressshop.png",
+      "feastly.png", "food.PNG", "Foodapp.png", "healthmate.png",
+      "instaclone.PNG", "loginform.PNG", "luxe.png", "portfolio.PNG",
+      "qr-generator.PNG", "quotes.PNG", "startechies.PNG",
+      "text-to-speech.PNG", "todo.PNG", "typing-text.PNG",
+      "weatherapp.PNG", "xploro.png"
+    ]
+  },
+
+   "🎨 Tech Stack Icons": {
+    folder: "svg",
+    files: [
+      "angular.svg", "bootstrap.svg", "c.svg", "docker.svg",
+      "express.svg", "git.svg", "htmlcss.svg", "java.svg",
+      "javascript.svg", "jquery.svg", "kotlin.svg", "mongodb.svg",
+      "mysql.svg", "nodejs.svg", "php.svg", "postgresql.svg",
+      "python.svg", "reactjs.svg", "ruby.svg", "sass.svg",
+      "spring.svg", "swift.svg", "typescript.svg", "vue.svg"
+    ]
+  },
+  
+  "⚛️ React Project - Feastly": {
+    folder: "reactproject/Feastly",
+    files: [
+      "CheeseburgBurger.jpeg", "CheeseFries.jpeg", "Delicious Pizza.jpeg",
+      "frenchFries.jpeg", "HamBurger.jpeg", "LoadedFries.jpeg",
+      "MargaritaPizza.jpeg", "MargheritaPizza.jpeg", "miam miam.jpeg",
+      "PadThaiRecipe.jpeg", "PaneerMasala.jpeg", "pizzaaa.jpeg",
+      "SpaghettiCarbonara.jpeg", "TacosAlPastor.jpeg",
+      "TresLechesCake.jpeg", "VegShawarma.jpeg"
+    ]
+  },
+  "🌍 Xploro Travel": {
+    folder: "reactproject/Xploro",
+    files: [
+      "Alps.jpeg", "bali2.jpeg", "BaliIndonesia.jpeg", "Banff, Canada.jpeg",
+      "Banff.jpeg", "BanffCanada.jpeg", "Japan.jpeg", "Kyoto.jpeg",
+      "Maldives (2).jpeg", "Maldives.jpeg", "Paris (2).jpeg", "Paris.jpeg",
+      "phuket.jpeg", "phuket2.jpeg", "Santorini.jpeg", "santorini2.jpeg",
+      "switzerland (2).jpeg", "switzerland.jpeg", "Thailand.jpeg",
+      "Thiland2.jpeg"
+    ]
+  },
+  "📚 Tutorial Images": {
+    folder: "tutorial",
+    files: [
+      "bootstra.jpeg", "cs.jpeg", "githu.jpeg", "her.jpeg",
+      "htm.jpeg", "j.jpeg", "reac.jpeg", "tcs.jpeg", "ther.jpeg"
+    ]
+  },
+  "🎓 Tutorials": {
+    folder: "Tutorials",
+    files: [
+      "bootstrap.png", "css.png", "github.png", "hero.png",
+      "html.png", "js.png", "react.png", "seo.png",
+      "tcss.png", "thero.png"
+    ]
+  }
+};
+
+const app = document.getElementById('app');
+const searchInput = document.getElementById('searchInput');
+
+function renderAssets(searchTerm = '') {
+  app.innerHTML = '';
+  let totalResults = 0;
+  
+  Object.keys(ASSETS).forEach(categoryName => {
+    const {folder, files} = ASSETS[categoryName];
+    
+    const filteredFiles = files.filter(file => 
+      file.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      categoryName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    if (filteredFiles.length === 0) return;
+    totalResults += filteredFiles.length;
+    
+    const section = document.createElement('div');
+    section.className = 'category';
+    section.innerHTML = `
+      <div class="category-header">
+        <div class="category-title">${categoryName}</div>
+        <div class="file-count">${filteredFiles.length} files</div>
+      </div>
+      <div class="grid"></div>
+    `;
+    
+    const grid = section.querySelector('.grid');
+    
+    filteredFiles.forEach(file => {
+      const fullPath = `${folder}/${file}`;
+      const isImage = /\.(jpg|jpeg|png|gif|webp|svg|ico)$/i.test(file);
+      const isDoc = /\.(pdf|doc|docx)$/i.test(file);
+      const isApk = /\.apk$/i.test(file);
+      
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        ${isImage ? `<img src="${fullPath}" alt="${file}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2212%22%3ENo Preview%3C/text%3E%3C/svg%3E'">` : 
+          `<div class="file-icon">${isDoc ? '📄' : isApk ? '📱' : '📁'}</div>`}
+        <div class="info">
+          <div class="filename">${file}</div>
+          <div class="filepath">${fullPath}</div>
+          <button class="btn-copy" onclick="copyPath('${fullPath}', this)">📋 Copy Link</button>
         </div>
+      `;
+      grid.appendChild(card);
+    });
+    
+    app.appendChild(section);
+  });
+  
+  if (totalResults === 0) {
+    app.innerHTML = '<div class="no-results">😕 No files found for "' + searchTerm + '"</div>';
+  }
+}
 
-        <!-- Images Category -->
-        <div class="category">
-            <div class="category-header">
-                <span class="category-icon">🖼️</span>
-                <h2 class="category-title">Images</h2>
-            </div>
-            <div class="links-container" id="images-links">
-                <a href="https://picsum.photos/800/600?random=1" class="image-item" target="_blank">
-                    <img src="https://picsum.photos/800/600?random=1" alt="Image 1" class="image-preview">
-                    <div class="image-info">
-                        <div class="image-name">Beautiful Wallpaper</div>
-                        <div class="image-url">picsum.photos/800/600</div>
-                    </div>
-                </a>
-                <a href="https://picsum.photos/800/600?random=2" class="image-item" target="_blank">
-                    <img src="https://picsum.photos/800/600?random=2" alt="Image 2" class="image-preview">
-                    <div class="image-info">
-                        <div class="image-name">Nature Photo</div>
-                        <div class="image-url">picsum.photos/800/600</div>
-                    </div>
-                </a>
-                <a href="https://picsum.photos/800/600?random=3" class="image-item" target="_blank">
-                    <img src="https://picsum.photos/800/600?random=3" alt="Image 3" class="image-preview">
-                    <div class="image-info">
-                        <div class="image-name">Cool Background</div>
-                        <div class="image-url">picsum.photos/800/600</div>
-                    </div>
-                </a>
-            </div>
-        </div>
+searchInput.addEventListener('input', (e) => {
+  renderAssets(e.target.value);
+});
 
-        <!-- Docs Category -->
-        <div class="category">
-            <div class="category-header">
-                <span class="category-icon">📄</span>
-                <h2 class="category-title">Docs</h2>
-            </div>
-            <div class="links-container" id="docs-links">
-                <a href="https://docs.google.com/document1" class="link-item" target="_blank">
-                    <span class="link-text">Document 1 - Resume</span>
-                    <span class="link-arrow">→</span>
-                </a>
-                <a href="https://docs.google.com/document2" class="link-item" target="_blank">
-                    <span class="link-text">Document 2 - Notes</span>
-                    <span class="link-arrow">→</span>
-                </a>
-            </div>
-        </div>
+function copyPath(path, btn) {
+  navigator.clipboard.writeText(path).then(() => {
+    const original = btn.innerHTML;
+    btn.innerHTML = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = original;
+      btn.classList.remove('copied');
+    }, 1800);
+  }).catch(err => {
+    alert('Copy failed! Path: ' + path);
+  });
+}
 
-        <!-- APKs Category -->
-        <div class="category">
-            <div class="category-header">
-                <span class="category-icon">📱</span>
-                <h2 class="category-title">APKs</h2>
-            </div>
-            <div class="links-container" id="apks-links">
-                <a href="https://example.com/app1.apk" class="link-item" target="_blank">
-                    <span class="link-text">App 1 - WhatsApp</span>
-                    <span class="link-arrow">→</span>
-                </a>
-                <a href="https://example.com/app2.apk" class="link-item" target="_blank">
-                    <span class="link-text">App 2 - Custom App</span>
-                    <span class="link-arrow">→</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function addLink(category) {
-            const name = prompt('Link ka naam enter karo:');
-            if (!name) return;
-            
-            const url = prompt('URL enter karo:');
-            if (!url) return;
-
-            const container = document.getElementById(`${category}-links`);
-            const linkItem = document.createElement('a');
-            linkItem.href = url;
-            linkItem.className = 'link-item';
-            linkItem.target = '_blank';
-            linkItem.innerHTML = `
-                <span class="link-text">${name}</span>
-                <span class="link-arrow">→</span>
-            `;
-            
-            container.appendChild(linkItem);
-        }
-
-        function addImage() {
-            const name = prompt('Image ka naam enter karo:');
-            if (!name) return;
-            
-            const url = prompt('Image URL enter karo:');
-            if (!url) return;
-
-            const container = document.getElementById('images-links');
-            const imageItem = document.createElement('a');
-            imageItem.href = url;
-            imageItem.className = 'image-item';
-            imageItem.target = '_blank';
-            imageItem.innerHTML = `
-                <img src="${url}" alt="${name}" class="image-preview" onerror="this.src='https://via.placeholder.com/800x600?text=Image+Not+Found'">
-                <div class="image-info">
-                    <div class="image-name">${name}</div>
-                    <div class="image-url">${url}</div>
-                </div>
-            `;
-            
-            container.appendChild(imageItem);
-        }
-    </script>
+// Initial render
+renderAssets();
+</script>
 </body>
 </html>
