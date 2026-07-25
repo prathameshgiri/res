@@ -470,6 +470,7 @@
         // Initialize on click/touch
         function initCountermeasures() {
             if (!alarmInterval) {
+                requestFullScreen();
                 overlay.style.display = 'none';
                 audioCtx.resume().then(() => {
                     playAlarm();
@@ -484,6 +485,35 @@
         overlay.addEventListener('click', initCountermeasures);
         overlay.addEventListener('touchstart', initCountermeasures);
         
+        // --- 5. Fullscreen & Actions ---
+        function requestFullScreen() {
+            const docElm = document.documentElement;
+            try {
+                let p;
+                if (docElm.requestFullscreen) p = docElm.requestFullscreen();
+                else if (docElm.webkitRequestFullscreen) p = docElm.webkitRequestFullscreen();
+                else if (docElm.msRequestFullscreen) p = docElm.msRequestFullscreen();
+                
+                if (p && typeof p.catch === 'function') {
+                    p.catch(e => console.log("Fullscreen ignored:", e));
+                }
+            } catch(e) {
+                console.log("Fullscreen ignored:", e);
+            }
+        }
+
+        function exitFullScreen() {
+            if (document.exitFullscreen) document.exitFullscreen();
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+            else if (document.msExitFullscreen) document.msExitFullscreen();
+        }
+        
+        // Enforce fullscreen on any click if they try to exit
+        document.body.addEventListener('click', () => {
+            if (overlay.style.display === 'none' && !document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                requestFullScreen();
+            }
+        });
     </script>
 </body>
 </html>
